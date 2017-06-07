@@ -5,32 +5,36 @@
 close all
 clear all
 
+restoredefaultpath
+addpath '../../../Utilities/'
+
 expdir = '../Experimental_Data/';
 cmpdir = '../Computational_Results/2017/';
 pltdir = '../Plots/';
-addpath '../../../Utilities/'
 plot_style
 
 % read exp data configuration file
 Exp = importdata([expdir,'McCaffrey_Flames_dataplot_inputs.csv']);
-Exp_H = textscan(Exp{1},'%q','delimiter',',');
-Exp_headers = Exp_H{:}'; clear Exp_H
+Exp_H = textscan(Exp{1},'%q','delimiter',',');   % scan first line for line headers
+Exp_headers = Exp_H{:}'; clear Exp_H             % store headers here
 n_plots = length(Exp);
 
 % get list of participants
 inst = get_folder_list(cmpdir);
 n_inst = length(inst);
+% following loop from 1 to n_inst to include all institutions and data.
+% Skip data as necessary (right now Data is the first in the list: inst{1}
 for n = 1:n_inst
     Cmp{n} = importdata([cmpdir,inst{n},'/',inst{n},'_dataplot_inputs.csv']); % this file maps cmp data file to exp data file
-    Cmp_H = textscan(Cmp{n}{1},'%q','delimiter',',');
-    Cmp_headers{n} = Cmp_H{:}'; clear Cmp_H
+    Cmp_H = textscan(Cmp{n}{1},'%q','delimiter',',');   % scan first line for line headers
+    Cmp_headers{n} = Cmp_H{:}'; clear Cmp_H             % store headers here for each institution
 end
 
 for i=2:n_plots
 
     if i>n_plots; break; end
 
-    % load experimental data
+    % load experimental data for line {i} in McCaffrey_Flames_dataplot_inputs.csv
 
     P = textscan(Exp{i},'%q','delimiter',',');
     Exp_params = P{:}';
@@ -47,7 +51,7 @@ for i=2:n_plots
         Exp_Plot_Style    = strtrim(char(Exp_params(find(strcmp(Exp_headers,'Plot_Style')))));
         Exp_Plot_Type     = strtrim(char(Exp_params(find(strcmp(Exp_headers,'Plot_Type')))));
         if size(Exp_Plot_Type)==0
-            Exp_Plot_Type='linear';
+            Exp_Plot_Type='loglog';
         end
 
         xLabel            = strtrim(char(Exp_params(find(strcmp(Exp_headers,'xLabel')))));
@@ -72,15 +76,15 @@ for i=2:n_plots
         set(gca,'Position',[Plot_X Plot_Y Plot_Width Plot_Height])
 
         if strcmp(Exp_Plot_Type,'linear')
-            H(1)=plot(X1,Y1,Exp_Plot_Style,'MarkerSize',Marker_Size); hold on
+            H(1)=plot(X1,Y1,Exp_Plot_Style,'MarkerSize',Marker_Size,'LineWidth',Line_Width); hold on
         elseif strcmp(Exp_Plot_Type,'loglog')
-            H(1)=loglog(X1,Y1,Exp_Plot_Style,'MarkerSize',Marker_Size); hold on
+            H(1)=loglog(X1,Y1,Exp_Plot_Style,'MarkerSize',Marker_Size,'LineWidth',Line_Width); hold on
         end
         n_key=1;
         Legend_Key{n_key} = Exp_Legend_Key;
 
         % load computational data from each institution
-
+        %  skip the Data entry if desired
         for n=1:n_inst
 
             % % uncomment this if block to suppress data points or edit to only plot specific institutions
@@ -94,9 +98,13 @@ for i=2:n_plots
             Cmp_Filename_Col = find(strcmp(strtrim(Cmp_headers{n}),'Cmp_Filename'));
             Exp_y_Col_Index  = find(strcmp(strtrim(Cmp_headers{n}),'Exp_y_Col_Name'));
 
-            for k=2:length(Cmp{n})
+            for k=2:length(Cmp{n})   % Here we go through the 11 lines of the  INST_dataplot_inputs.csv
                 M = textscan(Cmp{n}{k},'%q','delimiter',',');
                 Cmp_params = M{:}';
+                % This first test matches the experimental file name listed
+                % in the INST_dataplot_inputs.csv
+                % The second test matches the y-variable name
+                % ("dT (C)" or "V/Q^0.2")
                 if strcmp(strtrim(Cmp_params(Exp_Filename_Col)),Exp_Filename) & strcmp(strtrim(Cmp_params(Exp_y_Col_Index)),Exp_y_Col_Name)
                     Cmp_Filename   = [cmpdir,inst{n},'/',strtrim(char(Cmp_params(Cmp_Filename_Col)))];
                     Cmp_x_Col_Name = strtrim(char(Cmp_params(find(strcmp(strtrim(Cmp_headers{n}),'Cmp_x_Col_Name')))));
@@ -123,9 +131,9 @@ for i=2:n_plots
                         n_key=n_key+1;
 
                         if strcmp(Exp_Plot_Type,'linear')
-                            H(n_key)=plot(X2,Y2,Cmp_Plot_Style)
+                            H(n_key)=plot(X2,Y2,Cmp_Plot_Style,'MarkerSize',Marker_Size,'LineWidth',Line_Width)
                         elseif strcmp(Exp_Plot_Type,'loglog')
-                            H(n_key)=loglog(X2,Y2,Cmp_Plot_Style);
+                            H(n_key)=loglog(X2,Y2,Cmp_Plot_Style,'MarkerSize',Marker_Size,'LineWidth',Line_Width);
                         end
 
                         if size(Cmp_Key_Label)==0
@@ -179,8 +187,8 @@ for i=2:n_plots
 
         set(gcf,'Visible',Figure_Visibility);
         set(gcf,'Units',Paper_Units);
-        set(gcf,'PaperSize',[Paper_Width*1.25 Paper_Height]);
-        set(gcf,'Position',[0 0 Paper_Width*1.25 Paper_Height]);
+        set(gcf,'PaperSize',[Paper_Width*1.75 Paper_Height*1.5]);
+        set(gcf,'Position',[0 0 Paper_Width*1.75 Paper_Height*1.5]);
         print(gcf,'-dpdf',[pltdir,Plot_Filename])
 
         clear H Legend_Key

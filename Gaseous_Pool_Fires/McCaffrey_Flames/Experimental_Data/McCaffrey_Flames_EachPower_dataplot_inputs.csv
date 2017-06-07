@@ -1,0 +1,11 @@
+switch_id,Data_Filename,Plot_Type,Plot_Title,x_Col_Name,y_Col_Name,xLabel,yLabel,xMin,xMax,xTick,yMin,yMax,yTick,Legend_Key,Legend_Location,Plot_Style,Plot_Filename
+d,McCaffrey_Correlation_Temperature.csv,loglog,\DeltaT/Q^{1/5} 14kW,Z/Q^0.4,dT (C),Z/Q^{2/5},\DeltaT (\circC),0.008,1,0.1,40,2500,200,Corr 14 kW,SouthWest,k-,McCaffrey_14kW_T
+d,McCaffrey_Correlation_Temperature.csv,loglog,\DeltaT/Q^{1/5} 22kW,Z/Q^0.4,dT (C),Z/Q^{2/5},\DeltaT (\circC),0.008,1,0.1,40,2500,200,Corr 22 kW,SouthWest,k-,McCaffrey_22kW_T
+d,McCaffrey_Correlation_Temperature.csv,loglog,\DeltaT/Q^{1/5} 33kW,Z/Q^0.4,dT (C),Z/Q^{2/5},\DeltaT (\circC),0.008,1,0.1,40,2500,200,Corr 33 kW,SouthWest,k-,McCaffrey_33kW_T
+d,McCaffrey_Correlation_Temperature.csv,loglog,\DeltaT/Q^{1/5} 45kW,Z/Q^0.4,dT (C),Z/Q^{2/5},\DeltaT (\circC),0.008,1,0.1,40,2500,200,Corr 45 kW,SouthWest,k-,McCaffrey_45kW_T
+d,McCaffrey_Correlation_Temperature.csv,loglog,\DeltaT/Q^{1/5} 57kW,Z/Q^0.4,dT (C),Z/Q^{2/5},\DeltaT (\circC),0.008,1,0.1,40,2500,200,Corr 57 kW,SouthWest,k-,McCaffrey_57kW_T
+d,McCaffrey_Correlation_Velocity.csv,loglog,V/Q^{1/5} 14kW,Z/Q^0.4,V/Q^0.2,Z/Q^{2/5},V/Q^{1/5},0.008,1,0.1,0.5,2.5,0.5,Corr 14 kW,SouthEast,k-,McCaffrey_14kW_V
+d,McCaffrey_Correlation_Velocity.csv,loglog,V/Q^{1/5} 22kW,Z/Q^0.4,V/Q^0.2,Z/Q^{2/5},V/Q^{1/5},0.008,1,0.1,0.5,2.5,0.5,Corr 22 kW,SouthEast,k-,McCaffrey_22kW_V
+d,McCaffrey_Correlation_Velocity.csv,loglog,V/Q^{1/5} 33kW,Z/Q^0.4,V/Q^0.2,Z/Q^{2/5},V/Q^{1/5},0.008,1,0.1,0.5,2.5,0.5,Corr 33 kW,SouthEast,k-,McCaffrey_33kW_V
+d,McCaffrey_Correlation_Velocity.csv,loglog,V/Q^{1/5} 45kW,Z/Q^0.4,V/Q^0.2,Z/Q^{2/5},V/Q^{1/5},0.008,1,0.1,0.5,2.5,0.5,Corr 45 kW,SouthEast,k-,McCaffrey_45kW_V
+d,McCaffrey_Correlation_Velocity.csv,loglog,V/Q^{1/5} 57kW,Z/Q^0.4,V/Q^0.2,Z/Q^{2/5},V/Q^{1/5},0.008,1,0.1,0.5,2.5,0.5,Corr 57 kW,SouthEast,k-,McCaffrey_57kW_V
